@@ -1,53 +1,39 @@
-const zksync = require("zksync-web3");
-const Web3 = require("web3");
+const { Web3 } = require('web3');
+const { ZKsyncPlugin } = require('web3-plugin-zksync');
 
 class SACCOWalletManager {
-  constructor(privateKey) {
-    this.provider = new zksync.Web3Provider("https://zksync2-testnet.zksync.dev");
-    this.web3 = new Web3(this.provider);
-    this.signer = new zksync.Wallet(privateKey, this.provider);
+  constructor(privateKey, contractABI, contractAddress) {
+    this.web3 = new Web3('https://zksync2-testnet.zksync.dev');
+    this.web3.registerPlugin(new ZKsyncPlugin());
+    this.zksync = this.web3.ZKsync;
+    
     this.account = this.web3.eth.accounts.privateKeyToAccount(privateKey);
     this.web3.eth.accounts.wallet.add(this.account);
     this.web3.eth.defaultAccount = this.account.address;
+
+    this.contract = new this.web3.eth.Contract(contractABI, contractAddress);
   }
 
   async getBalance() {
-    return await this.web3.eth.getBalance(this.account.address);
+    return await this.contract.methods.getBalance().call({ from: this.account.address });
   }
 
-  async transfer(to, amount) {
-    const tx = await this.signer.sendTransaction({
-      to,
+  async deposit(amount) {
+    const tx = await this.web3.eth.sendTransaction({
+      from: this.account.address,
+      to: this.contract.options.address,
+      data: this.contract.methods.deposit().encodeABI(),
       value: this.web3.utils.toWei(amount, "ether"),
     });
-    await tx.wait();
     return tx;
   }
 
-  async depositToSACCO(saccoContractAddress, amount) {
-    const saccoContract = new this.web3.eth.Contract(
-      ["function deposit() payable"],
-      saccoContractAddress
-    );
-    const tx = await this.signer.sendTransaction({
-      to: saccoContractAddress,
-      data: saccoContract.methods.deposit().encodeABI(),
-      value: this.web3.utils.toWei(amount, "ether"),
+  async withdraw(amount) {
+    const tx = await this.web3.eth.sendTransaction({
+      from: this.account.address,
+      to: this.contract.options.address,
+      data: this.contract.methods.withdraw(this.web3.utils.toWei(amount, "ether")).encodeABI(),
     });
-    await tx.wait();
-    return tx;
-  }
-
-  async withdrawFromSACCO(saccoContractAddress, amount) {
-    const saccoContract = new this.web3.eth.Contract(
-      ["function withdraw(uint256 amount)"],
-      saccoContractAddress
-    );
-    const tx = await this.signer.sendTransaction({
-      to: saccoContractAddress,
-      data: saccoContract.methods.withdraw(this.web3.utils.toWei(amount, "ether")).encodeABI(),
-    });
-    await tx.wait();
     return tx;
   }
 }

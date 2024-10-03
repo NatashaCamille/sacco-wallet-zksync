@@ -1,31 +1,30 @@
+
+
 const SACCOWalletManager = require('./wallet');
-const SACCOWallet = require("../artifacts/contracts/SACCOWallet.sol/SACCOWallet.json");
+const contractABI = require('./SACCOWallet.json');  // You'll need to create this file
 
 async function main() {
-  // Setting up SACCOWalletManager
-  const privateKey = "<YOUR_PRIVATE_KEY>";
-  const walletManager = new SACCOWalletManager(privateKey);
-
-  // Setting up contract instance
+  const privateKey = process.env.API_KEY;
   const contractAddress = "<DEPLOYED_CONTRACT_ADDRESS>";
-  const saccoWallet = new walletManager.web3.eth.Contract(SACCOWallet.abi, contractAddress);
+  
+  const walletManager = new SACCOWalletManager(privateKey, contractABI, contractAddress);
 
-  // Depositing
+  // Deposit
   const depositAmount = "0.1";
-  const depositTx = await walletManager.depositToSACCO(contractAddress, depositAmount);
+  const depositTx = await walletManager.deposit(depositAmount);
   console.log("Deposit transaction:", depositTx.transactionHash);
 
   // Checking balance
-  const balance = await saccoWallet.methods.getBalance().call({ from: walletManager.account.address });
+  const balance = await walletManager.getBalance();
   console.log("Balance:", walletManager.web3.utils.fromWei(balance, "ether"));
 
   // Withdraw
   const withdrawAmount = "0.05";
-  const withdrawTx = await walletManager.withdrawFromSACCO(contractAddress, withdrawAmount);
+  const withdrawTx = await walletManager.withdraw(withdrawAmount);
   console.log("Withdraw transaction:", withdrawTx.transactionHash);
 
-  // Checking balance
-  const newBalance = await saccoWallet.methods.getBalance().call({ from: walletManager.account.address });
+
+  const newBalance = await walletManager.getBalance();
   console.log("New Balance:", walletManager.web3.utils.fromWei(newBalance, "ether"));
 }
 

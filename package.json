@@ -1,20 +1,20 @@
 {
   "name": "sacco-wallet-zksync",
   "version": "1.0.0",
+  "type": "module",
   "description": "SACCO Wallet with zkSync and Paymaster using Web3",
   "main": "src/index.js",
   "scripts": {
-    "start": "node src/index.js",
-    "deploy": "hardhat run scripts/deploy.js"
+    "start": "node src/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@matterlabs/hardhat-zksync-deploy": "^1.5.0",
-    "@matterlabs/hardhat-zksync-solc": "^1.2.5",
     "dotenv": "^16.4.5",
-    "hardhat": "^2.22.12",
+    "fs": "^0.0.1-security",
+    "node.js": "^0.0.1-security",
+    "solc": "^0.8.0",
     "web3": "^4.13.0",
     "web3-plugin-zksync": "^1.0.8",
     "zksync-web3": "^0.17.1"

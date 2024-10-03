@@ -1,3 +1,6 @@
+import { Web3 } from 'web3';
+import { ZKsyncPlugin } from 'web3-plugin-zksync';
+
 const { Web3 } = require('web3');
 const { ZKsyncPlugin } = require('web3-plugin-zksync');
 
