@@ -6,7 +6,7 @@ import fs from 'fs';
 const web3 = new Web3('https://sepolia.infura.io/v3/YOUR-PROJECT-ID');
 
 // Your account's private key
-const privateKey = 'YOUR_PRIVATE_KEY';
+const privateKey = process.env.PRIVATE_KEY;
 const account = web3.eth.accounts.privateKeyToAccount(privateKey);
 web3.eth.accounts.wallet.add(account);
 
