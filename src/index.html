@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SACCO Wallet</title>
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.9.0/dist/web3.min.js"></script>
+  <script src="main.js" defer></script>
+</head>
+<body>
+  <h1>SACCO Wallet</h1>
+
+  <div>
+    <h2>Account Info</h2>
+    <button id="connectWallet">Connect Wallet</button>
+    <p id="accountAddress">Account: Not connected</p>
+    <p id="accountBalance">Balance: 0 ETH</p>
+  </div>
+
+  <div>
+    <h2>Deposit to SACCO</h2>
+    <input type="text" id="depositAmount" placeholder="Amount in ETH">
+    <button id="depositBtn">Deposit</button>
+    <p id="depositStatus"></p>
+  </div>
+
+  <div>
+    <h2>Withdraw from SACCO</h2>
+    <input type="text" id="withdrawAmount" placeholder="Amount in ETH">
+    <button id="withdrawBtn">Withdraw</button>
+    <p id="withdrawStatus"></p>
+  </div>
+
+  <div>
+    <h2>Check SACCO Balance</h2>
+    <button id="checkBalanceBtn">Check Balance</button>
+    <p id="saccoBalance">SACCO Balance: 0 ETH</p>
+  </div>
+
+</body>
+</html>
