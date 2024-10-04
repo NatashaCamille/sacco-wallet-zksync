@@ -3,7 +3,7 @@ const { ZKsyncPlugin } = require('web3-plugin-zksync');
 
 class SACCOWalletManager {
   constructor(privateKey, contractABI, contractAddress) {
-    this.web3 = new Web3('https://zksync2-testnet.zksync.dev');
+    this.web3 = new Web3();
     this.web3.registerPlugin(new ZKsyncPlugin());
     this.zksync = this.web3.ZKsync;
     
