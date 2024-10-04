@@ -1,7 +1,7 @@
 
 
 const SACCOWalletManager = require('./wallet');
-const contractABI = require('./SACCOWallet.json');  // You'll need to create this file
+const contractABI = require('./SACCOWallet.json');  
 
 async function main() {
   const privateKey = process.env.API_KEY;

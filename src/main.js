@@ -34,7 +34,7 @@ const contractABI = [
       "type": "function"
     }
    ];
-const contractAddress = "<DEPLOYED_CONTRACT_ADDRESS>";
+const contractAddress = "process.env.DEPLOYED_CONTRACT_ADDRESS";
 let web3;
 let saccoWalletContract;
 let account;
