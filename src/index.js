@@ -1,11 +1,10 @@
 
-
 const SACCOWalletManager = require('./wallet');
 const contractABI = require('./SACCOWallet.json');  
 
 async function main() {
   const privateKey = process.env.API_KEY;
-  const contractAddress = "<DEPLOYED_CONTRACT_ADDRESS>";
+  const contractAddress = process.env.DEPLOYED_CONTRACT_ADDRESS;
   
   const walletManager = new SACCOWalletManager(privateKey, contractABI, contractAddress);
 
